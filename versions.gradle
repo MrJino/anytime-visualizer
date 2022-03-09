@@ -1,0 +1,9 @@
+ext {
+
+    defs = [
+            // Base
+            kotlinCore : "androidx.core:core-ktx:$kotlinCoreVersion",
+            kotlinStdlib : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinLibVersion",
+            appCompat : "androidx.appcompat:appcompat:$appCompatVersion",
+    ]
+}

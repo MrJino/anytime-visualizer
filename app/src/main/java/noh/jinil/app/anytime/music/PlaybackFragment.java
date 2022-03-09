@@ -1,35 +1,5 @@
 package noh.jinil.app.anytime.music;
 
-import java.util.Formatter;
-import java.util.Locale;
-
-import noh.jinil.app.anytime.IMainActivity;
-import noh.jinil.app.anytime.IMainFragment;
-import noh.jinil.app.anytime.R;
-import noh.jinil.app.anytime.main.MainLibraryFragment;
-import noh.jinil.app.anytime.main.IServiceFragment;
-import noh.jinil.app.anytime.main.MainActivity;
-import noh.jinil.app.anytime.main.VisualizerFullActivity;
-import noh.jinil.app.anytime.music.MusicNowplaying.MusicNowplayingListener;
-import noh.jinil.app.anytime.music.MusicSetting.MusicSettingListener;
-import noh.jinil.app.anytime.music.item.AppInfo;
-import noh.jinil.app.anytime.music.item.TrackItem;
-import noh.jinil.app.anytime.music.library.MusicLibraryFolder;
-import noh.jinil.app.anytime.music.library.MusicLibraryFolder.MusicLibraryListener;
-import noh.jinil.app.anytime.service.IMediaPlaybackService;
-import noh.jinil.app.anytime.service.MediaPlaybackService;
-import noh.jinil.app.anytime.service.RemoteControlService;
-import noh.jinil.app.anytime.album.ArtUtils;
-import noh.jinil.app.anytime.utils.ArcDrawable;
-import noh.jinil.app.anytime.utils.ArrayUtils;
-import noh.jinil.app.anytime.utils.PreferenceUtils;
-import noh.jinil.app.anytime.utils.RoundDrawable;
-import noh.jinil.app.anytime.utils.SystemUtils;
-import noh.jinil.app.anytime.utils.TouchUtils;
-import noh.jinil.app.anytime.utils.TouchUtils.OnTouchHandleListener;
-import noh.jinil.app.anytime.utils.VLog;
-import noh.jinil.app.anytime.visualizer.IVisualizerView;
-
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -85,6 +55,36 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Formatter;
+import java.util.Locale;
+
+import noh.jinil.app.anytime.IMainActivity;
+import noh.jinil.app.anytime.IMainFragment;
+import noh.jinil.app.anytime.R;
+import noh.jinil.app.anytime.album.ArtUtils;
+import noh.jinil.app.anytime.main.IServiceFragment;
+import noh.jinil.app.anytime.main.MainActivity;
+import noh.jinil.app.anytime.main.MainLibraryFragment;
+import noh.jinil.app.anytime.main.VisualizerFullActivity;
+import noh.jinil.app.anytime.music.MusicNowplaying.MusicNowplayingListener;
+import noh.jinil.app.anytime.music.MusicSetting.MusicSettingListener;
+import noh.jinil.app.anytime.music.item.AppInfo;
+import noh.jinil.app.anytime.music.item.TrackItem;
+import noh.jinil.app.anytime.music.library.MusicLibraryFolder;
+import noh.jinil.app.anytime.music.library.MusicLibraryFolder.MusicLibraryListener;
+import noh.jinil.app.anytime.service.IMediaPlaybackService;
+import noh.jinil.app.anytime.service.MediaPlaybackService;
+import noh.jinil.app.anytime.service.RemoteControlService;
+import noh.jinil.app.anytime.utils.ArcDrawable;
+import noh.jinil.app.anytime.utils.ArrayUtils;
+import noh.jinil.app.anytime.utils.PreferenceUtils;
+import noh.jinil.app.anytime.utils.RoundDrawable;
+import noh.jinil.app.anytime.utils.SystemUtils;
+import noh.jinil.app.anytime.utils.TouchUtils;
+import noh.jinil.app.anytime.utils.TouchUtils.OnTouchHandleListener;
+import noh.jinil.app.anytime.utils.VLog;
+import noh.jinil.app.anytime.visualizer.IVisualizerView;
 
 public class PlaybackFragment extends Fragment implements IServiceFragment, IMainFragment {
 	private static final String TAG = "PlaybackFragment";
