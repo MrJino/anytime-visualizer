@@ -1,9 +1,14 @@
 ext {
+    androidHiltVersion = '1.0.0'
 
     defs = [
             // Base
             kotlinCore : "androidx.core:core-ktx:$kotlinCoreVersion",
             kotlinStdlib : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinLibVersion",
             appCompat : "androidx.appcompat:appcompat:$appCompatVersion",
+
+            // Hilt
+            googleHiltAndroid : "com.google.dagger:hilt-android:$googleHiltVersion",
+            googleHiltCompiler : "com.google.dagger:hilt-compiler:$googleHiltVersion",
     ]
 }

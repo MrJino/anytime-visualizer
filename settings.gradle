@@ -1,2 +1,2 @@
-include ':app', ':colorPicker'
+include ':app', ':common', ':colorPicker'
 project(':colorPicker').projectDir = new File('colorPickerView')

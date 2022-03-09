@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -36,12 +37,21 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
+    implementation project(':common')
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':colorPicker')
     implementation defs.kotlinCore
     implementation defs.appCompat
     implementation 'com.google.android.material:material:1.5.0'
+
+    // Hilt
+    implementation defs.googleHiltAndroid
+    kapt defs.googleHiltCompiler
 }
