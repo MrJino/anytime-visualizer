@@ -59,6 +59,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.Formatter;
 import java.util.Locale;
 
+import anytime.visualizer.manager.MoveManager;
 import noh.jinil.app.anytime.IMainActivity;
 import noh.jinil.app.anytime.IMainFragment;
 import noh.jinil.app.anytime.R;
@@ -324,9 +325,12 @@ public class PlaybackFragment extends Fragment implements IServiceFragment, IMai
 		mBtnVolume.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				MoveManager.gotoMusicLibrary(requireContext());
+				/*
 				AudioManager audiomanager = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
 				int volume = audiomanager.getStreamVolume(AudioManager.STREAM_MUSIC);
 				audiomanager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, AudioManager.FLAG_SHOW_UI);
+				 */
 			}
 		});
 

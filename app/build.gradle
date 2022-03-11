@@ -37,6 +37,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -53,5 +57,10 @@ dependencies {
 
     // Hilt
     implementation defs.googleHiltAndroid
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt defs.googleHiltCompiler
+
+    // Navigation
+    implementation defs.androidNavFragmentKtx
+    implementation defs.androidNavUiKtx
 }

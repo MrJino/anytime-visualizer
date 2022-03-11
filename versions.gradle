@@ -10,5 +10,10 @@ ext {
             // Hilt
             googleHiltAndroid : "com.google.dagger:hilt-android:$googleHiltVersion",
             googleHiltCompiler : "com.google.dagger:hilt-compiler:$googleHiltVersion",
+
+            // Navigation
+            androidNavFragmentKtx : "androidx.navigation:navigation-fragment-ktx:$androidNavVersion",
+            androidNavUiKtx : "androidx.navigation:navigation-ui-ktx:$androidNavVersion",
+            androidNavSafeArgs : "androidx.navigation:navigation-safe-args-gradle-plugin:$androidNavVersion",
     ]
 }

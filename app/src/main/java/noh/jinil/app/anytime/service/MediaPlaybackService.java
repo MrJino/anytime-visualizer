@@ -2930,7 +2930,7 @@ public class MediaPlaybackService extends Service {
             v.setOnClickPendingIntent(R.id.noti_button_activity, pi);
 			
 			mNotification.contentView = v;
-			startForeground(1, mNotification);
+			//startForeground(1, mNotification);
 		}
     }    
 
