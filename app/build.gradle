@@ -48,6 +48,7 @@ android {
 
 dependencies {
     implementation project(':common')
+    implementation project(':repository')
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':colorPicker')
@@ -63,4 +64,8 @@ dependencies {
     // Navigation
     implementation defs.androidNavFragmentKtx
     implementation defs.androidNavUiKtx
+
+    // image
+    implementation defs.glide
+    kapt defs.glideCompiler
 }

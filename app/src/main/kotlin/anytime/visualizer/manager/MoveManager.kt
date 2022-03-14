@@ -2,13 +2,13 @@ package anytime.visualizer.manager
 
 import android.content.Context
 import android.content.Intent
-import anytime.visualizer.feature.media.MediaActivity
+import anytime.visualizer.feature.audio.AudioActivity
 
 object MoveManager {
 
     @JvmStatic
     fun gotoMusicLibrary(context: Context) {
-        val intent = Intent(context, MediaActivity::class.java)
+        val intent = Intent(context, AudioActivity::class.java)
         context.startActivity(intent)
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="anytime.visualizer.list.items.ArtistItemViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        tools:theme="@style/Theme.MyNewTheme"
+        style="@style/AudioItemLayout"
+        android:gravity="center_vertical"
+        android:background="@color/background">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            style="@style/AudioItemIcon"
+            android:src="@drawable/ic_baseline_person_24" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AudioItemTitle"
+            android:layout_marginStart="5dp"
+            android:text="@{viewModel.name}"
+            tools:text="트랙이름" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

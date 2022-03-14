@@ -6,9 +6,9 @@
     <color name="nowplaying_title_playing">#4684e8</color>
     <color name="theme_button_select">#4684e8</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorPrimary">#445de1</color>
+    <color name="colorPrimaryDark">#00ff00</color>
+    <color name="colorAccent">#aaaaaa</color>
 
     <color name="playback_menuButton_text">#ffffff</color>
     <color name="playback_menuButton_background">#2196F3</color>
@@ -39,4 +39,11 @@
     <color name="expand_list_adapter_art_sel">#75000000</color>
     <color name="expand_list_adapter_art_nor">#00000000</color>
     <color name="expand_list_adapter_separator">#b8b8b8</color>
+
+    <color name="theme60">#0f62fe</color>
+    <color name="theme80">#002d9c</color>
+    <color name="gray60">#697077</color>
+    <color name="gray40">#a2a9b0</color>
+    <color name="background">#ffffff</color>
+    <color name="iconTint">#697077</color>
 </resources>

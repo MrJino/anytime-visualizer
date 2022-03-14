@@ -5,9 +5,9 @@ buildscript {
     ext {
         kotlinCoreVersion = '1.7.0'
         kotlinLibVersion = '1.6.10'
-        appCompatVersion = '1.4.0'
+        appCompatVersion = '1.4.1'
         androidNavVersion = '2.3.5'
-        googleHiltVersion = '2.40'
+        googleHiltVersion = '2.41'
         compileSdkVersion = 31
         minSdkVersion = 19
         targetSdkVersion = 30

@@ -26,15 +26,16 @@
     <application
         android:label="@string/app_name"
         android:name="anytime.visualizer.VisualizerApp"
+        android:theme="@style/Theme.MyTheme.NoActionBar"
         android:hardwareAccelerated="true"
-        android:theme="@style/Theme.MyTheme"
         android:icon="@drawable/ic_launcher">
 
-        <activity android:name="anytime.visualizer.feature.media.MediaActivity" />
+        <activity android:name="anytime.visualizer.feature.audio.AudioActivity"
+            android:theme="@style/Theme.MyNewTheme"/>
 
         <activity
             android:name="noh.jinil.app.anytime.main.MainActivity"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -43,6 +44,7 @@
         </activity>
 
         <activity
+            android:exported="false"
             android:name="noh.jinil.app.anytime.main.VisualizerFullActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
@@ -52,6 +54,7 @@
 
         <!-- 컬러 세팅 -->
         <activity
+            android:exported="false"
             android:name="noh.jinil.app.anytime.main.ColorSetActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />

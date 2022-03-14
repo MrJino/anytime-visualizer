@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@id/mediaTrackFragment"
         android:title="@string/bottom_nav_track"
         android:icon="@drawable/ic_baseline_audiotrack_24" />
 
     <item
+        android:id="@id/mediaAlbumFragment"
         android:title="@string/bottom_nav_album"
         android:icon="@drawable/ic_baseline_album_24" />
 
     <item
+        android:id="@id/mediaArtistFragment"
         android:title="@string/bottom_nav_artist"
         android:icon="@drawable/ic_baseline_person_24" />
 
     <item
+        android:id="@id/mediaFolderFragment"
         android:title="@string/bottom_nav_folder"
         android:icon="@drawable/ic_baseline_folder_24" />
 </menu>
