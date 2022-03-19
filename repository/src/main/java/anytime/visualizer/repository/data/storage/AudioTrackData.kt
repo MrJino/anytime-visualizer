@@ -3,7 +3,7 @@ package anytime.visualizer.repository.data.storage
 import android.net.Uri
 import anytime.visualizer.repository.entity.storage.AudioTrackEntity
 
-data class AudioTrackData(
+data class AudioTrackData (
     val id: Long,
     val displayName: String,
     val contentUri: Uri,

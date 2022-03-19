@@ -4,15 +4,34 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
+import anytime.visualizer.common.AVDebugLog
+import anytime.visualizer.repository.entity.storage.AudioQueueEntity
 
 class AudioPlaybackService : Service() {
+
+    private val logTag = AudioPlaybackService::class.simpleName
     private val binder: IBinder = MyBinder()
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        AVDebugLog.w(logTag, "onStartCommand-()")
+        return START_NOT_STICKY
+    }
+
     override fun onBind(inten: Intent?): IBinder {
+        AVDebugLog.w(logTag, "onBind-()")
         return binder
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        AVDebugLog.w(logTag, "onUnbind-()")
+        return true
     }
 
     inner class MyBinder : Binder() {
         fun getService() = this@AudioPlaybackService
+    }
+
+    fun addQueue(list: List<AudioQueueEntity>) {
+        AVDebugLog.w(logTag, "addQueue-() size: ${list.size}")
     }
 }

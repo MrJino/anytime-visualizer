@@ -1,5 +1,6 @@
 package anytime.visualizer.repository
 
+import anytime.visualizer.repository.source.localDB.LocalDataSource
 import anytime.visualizer.repository.source.storage.StorageDataSource
 import dagger.Module
 import dagger.Provides
@@ -14,8 +15,9 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideRepositoryApi(
-        storageDataSource: StorageDataSource
+        storageDataSource: StorageDataSource,
+        localDataSource: LocalDataSource
     ) : RepositoryApi {
-        return RepositoryService(storageDataSource)
+        return RepositoryService(storageDataSource, localDataSource)
     }
 }

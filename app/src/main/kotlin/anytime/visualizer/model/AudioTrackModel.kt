@@ -1,6 +1,7 @@
 package anytime.visualizer.model
 
 import android.net.Uri
+import anytime.visualizer.repository.entity.storage.AudioQueueEntity
 import anytime.visualizer.repository.entity.storage.AudioTrackEntity
 
 data class AudioTrackModel(
@@ -16,3 +17,8 @@ data class AudioTrackModel(
         )
     }
 }
+
+fun AudioTrackModel.toAudioQueue() = AudioQueueEntity(
+    title = title,
+    contentUri = contentUri
+)

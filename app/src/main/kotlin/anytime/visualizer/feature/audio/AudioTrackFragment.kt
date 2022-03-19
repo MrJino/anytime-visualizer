@@ -29,4 +29,10 @@ class AudioTrackFragment : Fragment() {
         }
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        trackViewModel.onPlayRequest = { queue ->
+            (requireActivity() as AudioActivity).audioService?.addQueue(queue)
+        }
+    }
 }

@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import anytime.visualizer.list.AppListAdapter
 import anytime.visualizer.list.items.TrackItemViewModel
 import anytime.visualizer.model.AudioTrackModel
+import anytime.visualizer.model.toAudioQueue
 import anytime.visualizer.repository.RepositoryApi
+import anytime.visualizer.repository.entity.storage.AudioQueueEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import noh.jinil.app.anytime.R
@@ -18,6 +20,8 @@ class AudioTrackViewModel @Inject constructor(
     init {
         loadAudioTracks()
     }
+
+    var onPlayRequest: ((List<AudioQueueEntity>) -> Unit)? = null
 
     val adapter = AppListAdapter()
 
@@ -33,7 +37,11 @@ class AudioTrackViewModel @Inject constructor(
     private fun generate(list: List<AudioTrackModel>) {
         adapter.clearData()
         list.forEach { track ->
-            adapter.addData(TrackItemViewModel(R.layout.item_audio_track, track))
+            adapter.addData(TrackItemViewModel(R.layout.item_audio_track, track).apply {
+                onClick = {
+                    onPlayRequest?.invoke(listOf(it.toAudioQueue()))
+                }
+            })
         }
     }
 }

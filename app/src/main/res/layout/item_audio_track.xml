@@ -13,7 +13,8 @@
         tools:theme="@style/Theme.MyNewTheme"
         style="@style/AudioItemLayout"
         android:gravity="center_vertical"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:onClick="@{() -> viewModel.performClick()}">
 
         <androidx.appcompat.widget.AppCompatImageView
             style="@style/AudioItemIcon"

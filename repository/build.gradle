@@ -43,4 +43,9 @@ dependencies {
 
     // Coroutine
     implementation defs.kotlinCoroutine
+
+    // Room
+    implementation defs.roomRuntime
+    implementation defs.roomKtx
+    kapt defs.roomCompiler
 }
