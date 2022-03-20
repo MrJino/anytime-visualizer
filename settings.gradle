@@ -1,3 +1,4 @@
 include ':app', ':common', ':colorPicker'
 project(':colorPicker').projectDir = new File('colorPickerView')
 include ':repository'
+include ':player'

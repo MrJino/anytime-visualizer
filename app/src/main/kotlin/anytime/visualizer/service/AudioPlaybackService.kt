@@ -6,11 +6,19 @@ import android.os.Binder
 import android.os.IBinder
 import anytime.visualizer.common.AVDebugLog
 import anytime.visualizer.repository.entity.storage.AudioQueueEntity
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.scopes.ServiceScoped
+import noh.jinil.app.kotlin.player.PlayerApi
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AudioPlaybackService : Service() {
 
     private val logTag = AudioPlaybackService::class.simpleName
     private val binder: IBinder = MyBinder()
+
+    @Inject
+    lateinit var player: PlayerApi
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         AVDebugLog.w(logTag, "onStartCommand-()")
@@ -33,5 +41,6 @@ class AudioPlaybackService : Service() {
 
     fun addQueue(list: List<AudioQueueEntity>) {
         AVDebugLog.w(logTag, "addQueue-() size: ${list.size}")
+        player.play(list[0].contentUri)
     }
 }

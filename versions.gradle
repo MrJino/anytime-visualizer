@@ -3,6 +3,7 @@ ext {
     coroutineVersion = '1.6.0-native-mt'
     glideVersion = '4.12.0'
     roomVersion = "2.4.2"
+    exoVersion = "2.17.1"
     defs = [
             // Base
             kotlinCore : "androidx.core:core-ktx:$kotlinCoreVersion",
@@ -28,6 +29,10 @@ ext {
             // Room
             roomRuntime : "androidx.room:room-runtime:$roomVersion",
             roomKtx : "androidx.room:room-ktx:$roomVersion",
-            roomCompiler : "androidx.room:room-compiler:$roomVersion"
+            roomCompiler : "androidx.room:room-compiler:$roomVersion",
+
+            // Exoplayer
+            exoCore : "com.google.android.exoplayer:exoplayer-core:$exoVersion",
+            exoUi : "com.google.android.exoplayer:exoplayer-ui:$exoVersion",
     ]
 }
