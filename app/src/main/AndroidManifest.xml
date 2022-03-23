@@ -30,8 +30,11 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher">
 
-        <activity android:name="anytime.visualizer.feature.audio.AudioActivity"
+        <activity android:name="anytime.visualizer.AudioLibraryActivity"
             android:theme="@style/Theme.MyNewTheme"/>
+
+        <activity android:name="anytime.visualizer.MainPlayerActivity"
+            android:theme="@style/Theme.MyNewTheme.NoActionBar"/>
 
         <activity
             android:name="noh.jinil.app.anytime.main.MainActivity"

@@ -6,4 +6,9 @@
         <item name="colorControlNormal">@color/gray60</item>
         <item name="android:textColor">@color/gray60</item>
     </style>
+
+    <style name="Theme.MyNewTheme.NoActionBar" parent="Theme.MyNewTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

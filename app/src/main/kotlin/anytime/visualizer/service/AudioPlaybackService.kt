@@ -20,6 +20,16 @@ class AudioPlaybackService : Service() {
     @Inject
     lateinit var player: PlayerApi
 
+    override fun onCreate() {
+        AVDebugLog.w(logTag, "onCreate-()")
+        super.onCreate()
+    }
+
+    override fun onDestroy() {
+        AVDebugLog.w(logTag, "onDestroy-()")
+        super.onDestroy()
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         AVDebugLog.w(logTag, "onStartCommand-()")
         return START_NOT_STICKY

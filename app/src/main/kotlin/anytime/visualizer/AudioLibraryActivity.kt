@@ -1,24 +1,24 @@
-package anytime.visualizer.feature.audio
+package anytime.visualizer
 
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.ui.setupWithNavController
 import anytime.visualizer.common.AVDebugLog
-import anytime.visualizer.findNavControllerFromFragmentManager
 import anytime.visualizer.service.AudioPlaybackService
 import dagger.hilt.android.AndroidEntryPoint
 import noh.jinil.app.anytime.R
 import noh.jinil.app.anytime.databinding.ActivityAudioBinding
 
 @AndroidEntryPoint
-class AudioActivity : AppCompatActivity(), ServiceConnection {
-    private val logTag = AudioActivity::class.simpleName
+class AudioLibraryActivity : AppCompatActivity(), ServiceConnection {
+    private val logTag = AudioLibraryActivity::class.simpleName
     private lateinit var binding: ActivityAudioBinding
 
     var audioService: AudioPlaybackService? = null

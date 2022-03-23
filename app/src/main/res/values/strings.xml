@@ -193,4 +193,8 @@
     <string name="action_bar_album" translatable="false">앨범 선택</string>
     <string name="action_bar_artist" translatable="false">아티스트 선택</string>
     <string name="action_bar_folder" translatable="false">폴더 선택</string>
+
+    <string name="menu_settings" translatable="false">세팅</string>
+    <string name="menu_information" translatable="false">정보</string>
+    <string name="menu_audio_library" translatable="false">오디오 라이브러리</string>
 </resources>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import anytime.visualizer.AudioLibraryActivity
 import anytime.visualizer.common.AVDebugLog
 import dagger.hilt.android.AndroidEntryPoint
 import noh.jinil.app.anytime.R
@@ -21,7 +22,7 @@ class AudioTrackFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         AVDebugLog.i(logTag, "onCreateView-()")
-        AudioActivity.actionBarTitle.postValue(getString(R.string.action_bar_track))
+        AudioLibraryActivity.actionBarTitle.postValue(getString(R.string.action_bar_track))
 
         binding = DataBindingUtil.inflate<FragmentAudioTrackBinding?>(inflater, R.layout.fragment_audio_track, container, false).apply {
             viewModel = trackViewModel
@@ -32,7 +33,7 @@ class AudioTrackFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         trackViewModel.onPlayRequest = { queue ->
-            (requireActivity() as AudioActivity).audioService?.addQueue(queue)
+            (requireActivity() as AudioLibraryActivity).audioService?.addQueue(queue)
         }
     }
 }

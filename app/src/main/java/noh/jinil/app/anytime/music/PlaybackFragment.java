@@ -325,7 +325,7 @@ public class PlaybackFragment extends Fragment implements IServiceFragment, IMai
 		mBtnVolume.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				MoveManager.gotoMusicLibrary(requireContext());
+				MoveManager.gotoMainPlayer(requireContext());
 				/*
 				AudioManager audiomanager = (AudioManager)getActivity().getSystemService(Context.AUDIO_SERVICE);
 				int volume = audiomanager.getStreamVolume(AudioManager.STREAM_MUSIC);

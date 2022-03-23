@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     android:background="#000000"
     tools:ignore="ContentDescription">
-    <ImageView 
+
+    <ImageView
         android:id="@+id/activity_main_bgImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
