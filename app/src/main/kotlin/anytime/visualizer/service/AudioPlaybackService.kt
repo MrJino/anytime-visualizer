@@ -1,18 +1,26 @@
 package anytime.visualizer.service
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.Notification
+import android.app.PendingIntent
 import android.app.Service
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.media.MediaMetadata
+import android.net.Uri
 import android.os.Binder
 import android.os.Build
 import android.os.IBinder
-import android.widget.RemoteViews
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.MediaSessionCompat
+import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.app.NotificationCompat
+import androidx.media.app.NotificationCompat.MediaStyle
 import anytime.visualizer.common.AVDebugLog
 import anytime.visualizer.repository.entity.storage.AudioQueueEntity
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.scopes.ServiceScoped
+import kotlinx.coroutines.*
 import noh.jinil.app.anytime.R
 import noh.jinil.app.kotlin.player.PlayerApi
 import javax.inject.Inject
@@ -26,18 +34,40 @@ class AudioPlaybackService : Service() {
     @Inject
     lateinit var player: PlayerApi
 
+    private var currentTrack: AudioQueueEntity? = null
+
+    companion object {
+        private const val NOTIFICATION_ID = 1
+        private const val CHANNEL_ID = "visualizer_channel_id"
+
+        private const val ACTION_PAUSE = "playback.service.action.pause"
+        private const val ACTION_RESUME = "playback.service.action.resume"
+        private const val ACTION_NEXT = "playback.service.action.next"
+        private const val ACTION_PREV = "playback.service.action.prev"
+    }
+
     override fun onCreate() {
         AVDebugLog.w(logTag, "onCreate-()")
         super.onCreate()
+
+        val actionFilter = IntentFilter().apply {
+            addAction(ACTION_PAUSE)
+            addAction(ACTION_RESUME)
+            addAction(ACTION_PREV)
+            addAction(ACTION_NEXT)
+        }
+        registerReceiver(intentReceiver, actionFilter)
+
+        player.setStateChangedListener(playStateChangedListener)
     }
 
     override fun onDestroy() {
         AVDebugLog.w(logTag, "onDestroy-()")
         super.onDestroy()
+        unregisterReceiver(intentReceiver)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        AVDebugLog.w(logTag, "onStartCommand-()")
         return START_NOT_STICKY
     }
 
@@ -61,40 +91,103 @@ class AudioPlaybackService : Service() {
     }
 
     fun addQueue(list: List<AudioQueueEntity>) {
-        AVDebugLog.w(logTag, "addQueue-() size: ${list.size}")
-        player.play(list[0].contentUri)
-        showNotificationPlayer()
+        AVDebugLog.d(logTag, "addQueue-() size: ${list.size}")
+        currentTrack = list[0]
+        currentTrack?.let {
+            playAudio(it.contentUri)
+        }
     }
 
-    companion object {
-        private const val NOTIFICATION_ID = 1
-        private const val CHANNEL_ID = "visualizer_channel_id"
-        private const val CHANNEL_NAME = "Visualizer Channel"
+    private val intentReceiver = object: BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                ACTION_PAUSE -> pauseAudio()
+                ACTION_RESUME -> resumeAudio()
+                ACTION_PREV -> player.prev()
+                ACTION_NEXT -> player.next()
+            }
+        }
     }
 
+    private val playStateChangedListener: (PlayerApi.State) -> Unit = { _ ->
+        showNotificationPlayer(currentTrack)
+    }
 
-    private fun showNotificationPlayer() {
+    /**
+     * Notification Player
+     */
+    private fun showNotificationPlayer(track: AudioQueueEntity?) {
         AVDebugLog.d(logTag, "showNotificationPlayer-()")
-        val remoteViews = RemoteViews(packageName, R.layout.notification)
+        track ?: return
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val manager = getSystemService(NotificationManager::class.java)
-            val serviceChannel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_HIGH
+        val mediaSession = MediaSessionCompat(this, "PlayerService").apply {
+            setMetadata(
+                MediaMetadataCompat.Builder()
+                    .putString(MediaMetadata.METADATA_KEY_TITLE, track.title)
+                    .putLong(MediaMetadata.METADATA_KEY_DURATION, player.duration())
+                    .build()
             )
-            manager.createNotificationChannel(serviceChannel)
-
-            startForegroundService(Intent(applicationContext, AudioPlaybackService::class.java))
+            setPlaybackState(
+                PlaybackStateCompat.Builder()
+                    .setState(
+                        player.state().toPlaybackState(),
+                        player.playtime(),
+                        1.0f
+                    )
+                    .setActions(PlaybackStateCompat.ACTION_SEEK_TO)
+                    .build()
+            )
         }
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContent(remoteViews)
+            .setStyle(MediaStyle().setMediaSession(mediaSession.sessionToken))
             .setSmallIcon(R.drawable.statusbar)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
+        val toggleAction = if (player.isPlaying()) {
+            Notification.Action.Builder(
+                R.drawable.music_button_pause,
+                "Pause",
+                PendingIntent.getBroadcast(this, 0, Intent(ACTION_PAUSE), 0))
+                .build()
+        } else {
+            Notification.Action.Builder(
+                R.drawable.music_button_play,
+                "Resume",
+                PendingIntent.getBroadcast(this, 0, Intent(ACTION_RESUME), 0))
+                .build()
+        }
+
+        val prevAction = Notification.Action.Builder(
+            R.drawable.music_button_prev,
+            "Prev",
+            PendingIntent.getBroadcast(this, 0, Intent(ACTION_PREV), 0))
+            .build()
+
+        val nextAction = Notification.Action.Builder(
+            R.drawable.music_button_next,
+            "Next",
+            PendingIntent.getBroadcast(this, 0, Intent(ACTION_NEXT), 0))
+            .build()
+
+        notification.actions = arrayOf(prevAction, toggleAction, nextAction)
+
         startForeground(NOTIFICATION_ID, notification)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(Intent(applicationContext, AudioPlaybackService::class.java))
+        }
+    }
+
+    private fun playAudio(contentUri: Uri) {
+        player.play(contentUri)
+    }
+
+    private fun pauseAudio() {
+        player.pause()
+    }
+
+    private fun resumeAudio() {
+        player.resume()
     }
 }

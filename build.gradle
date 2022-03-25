@@ -9,7 +9,7 @@ buildscript {
         androidNavVersion = '2.3.5'
         googleHiltVersion = '2.41'
         compileSdkVersion = 31
-        minSdkVersion = 19
+        minSdkVersion = 21
         targetSdkVersion = 30
     }
     repositories {

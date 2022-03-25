@@ -19,7 +19,7 @@ class StorageAudioService @Inject constructor(
     private val logTag = StorageAudioService::class.simpleName
 
     suspend fun queryAudioTracks(): List<AudioTrackData> {
-        AVDebugLog.w(logTag, "queryAudioTracks-()")
+        AVDebugLog.d(logTag, "queryAudioTracks-()")
         val tracks = mutableListOf<AudioTrackData>()
 
         withContext(Dispatchers.IO) {
