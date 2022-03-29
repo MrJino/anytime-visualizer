@@ -1,15 +1,15 @@
 package anytime.visualizer.list
 
-import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.MutableLiveData
 
 abstract class BaseItemViewModel(val layoutId: Int, val data: Any? = null) {
     var itemId: Long = 0
-    val checked = ObservableBoolean(false)
+    val checked = MutableLiveData(false)
 
-    var checkCallback: ((Boolean) -> Unit)? = null
+    var onChecked: ((Boolean?) -> Unit)? = null
 
     fun toggleChecked() {
-        checked.set(!checked.get())
-        checkCallback?.invoke(checked.get())
+        checked.value = checked.value != true
+        onChecked?.invoke(checked.value)
     }
 }

@@ -23,10 +23,6 @@ class AudioLibraryActivity : AppCompatActivity(), ServiceConnection {
 
     var audioService: AudioPlaybackService? = null
 
-    companion object {
-        val actionBarTitle = MutableLiveData("")
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AVDebugLog.i(logTag, "onCreate-()")
@@ -39,8 +35,12 @@ class AudioLibraryActivity : AppCompatActivity(), ServiceConnection {
 
         bottomNavView.setupWithNavController(navController)
 
-        actionBarTitle.observe(this) { title ->
+        appActionBarTitle.observe(this) { title ->
             supportActionBar?.title = title
+        }
+        appBottomMenu.observe(this) { menu ->
+            AVDebugLog.l(logTag, "appBottomMenu: $menu")
+            binding.mediaBottomNav.show(menu == AppBottomMenu.NONE)
         }
     }
 

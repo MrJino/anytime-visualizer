@@ -197,4 +197,6 @@
     <string name="menu_settings" translatable="false">세팅</string>
     <string name="menu_information" translatable="false">정보</string>
     <string name="menu_audio_library" translatable="false">오디오 라이브러리</string>
+
+    <string name="bottom_menu_play" translatable="false">재생</string>
 </resources>

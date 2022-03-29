@@ -1,8 +1,6 @@
 package anytime.visualizer.service
 
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -23,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import noh.jinil.app.anytime.R
 import noh.jinil.app.kotlin.player.PlayerApi
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,11 +33,13 @@ class AudioPlaybackService : Service() {
     @Inject
     lateinit var player: PlayerApi
 
-    private var currentTrack: AudioQueueEntity? = null
+    private val playQueue = LinkedList<AudioQueueEntity>()
+    private var playIndex = 0
 
     companion object {
         private const val NOTIFICATION_ID = 1
         private const val CHANNEL_ID = "visualizer_channel_id"
+        private const val CHANNEL_NAME = "Visualizer Channel"
 
         private const val ACTION_PAUSE = "playback.service.action.pause"
         private const val ACTION_RESUME = "playback.service.action.resume"
@@ -92,10 +93,20 @@ class AudioPlaybackService : Service() {
 
     fun addQueue(list: List<AudioQueueEntity>) {
         AVDebugLog.d(logTag, "addQueue-() size: ${list.size}")
-        currentTrack = list[0]
-        currentTrack?.let {
-            playAudio(it.contentUri)
+        if (list.isEmpty()) {
+            return
         }
+        playIndex = playQueue.size
+        playQueue.addAll(list)
+        playAudio()
+    }
+
+    fun nextQueue() {
+        playIndex++
+        if (playIndex >= playQueue.size) {
+            playIndex = 0
+        }
+        playAudio()
     }
 
     private val intentReceiver = object: BroadcastReceiver() {
@@ -104,21 +115,32 @@ class AudioPlaybackService : Service() {
                 ACTION_PAUSE -> pauseAudio()
                 ACTION_RESUME -> resumeAudio()
                 ACTION_PREV -> player.prev()
-                ACTION_NEXT -> player.next()
+                ACTION_NEXT -> nextQueue()
             }
         }
     }
 
     private val playStateChangedListener: (PlayerApi.State) -> Unit = { _ ->
-        showNotificationPlayer(currentTrack)
+        showNotificationPlayer(playQueue[playIndex])
     }
 
     /**
      * Notification Player
      */
     private fun showNotificationPlayer(track: AudioQueueEntity?) {
-        AVDebugLog.d(logTag, "showNotificationPlayer-()")
         track ?: return
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val manager = getSystemService(NotificationManager::class.java)
+            val serviceChannel = NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            manager.createNotificationChannel(serviceChannel)
+
+            startForegroundService(Intent(applicationContext, AudioPlaybackService::class.java))
+        }
 
         val mediaSession = MediaSessionCompat(this, "PlayerService").apply {
             setMetadata(
@@ -173,14 +195,11 @@ class AudioPlaybackService : Service() {
         notification.actions = arrayOf(prevAction, toggleAction, nextAction)
 
         startForeground(NOTIFICATION_ID, notification)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(Intent(applicationContext, AudioPlaybackService::class.java))
-        }
     }
 
-    private fun playAudio(contentUri: Uri) {
-        player.play(contentUri)
+    private fun playAudio() {
+        val track = playQueue[playIndex]
+        player.play(track.contentUri)
     }
 
     private fun pauseAudio() {

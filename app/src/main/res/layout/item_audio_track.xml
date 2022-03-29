@@ -4,27 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="anytime.visualizer.list.items.TrackItemViewModel" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         tools:theme="@style/Theme.MyNewTheme"
-        style="@style/AudioItemLayout"
-        android:gravity="center_vertical"
-        android:background="@color/background"
-        android:onClick="@{() -> viewModel.performClick()}">
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            style="@style/AudioItemIcon"
-            android:src="@drawable/ic_baseline_audiotrack_24" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            style="@style/AudioItemLayout"
+            android:gravity="center_vertical"
+            android:background="@{viewModel.checked ? @color/gray30 : @color/background}"
+            android:onClick="@{() -> viewModel.toggleChecked()}"
+            tools:background="@color/background">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/AudioItemTitle"
+            <androidx.appcompat.widget.AppCompatImageView
+                style="@style/AudioItemIcon"
+                android:src="@drawable/ic_baseline_audiotrack_24" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/AudioItemTitle"
+                android:layout_marginStart="5dp"
+                android:text="@{viewModel.title}"
+                tools:text="트랙이름" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_check_24"
+                android:visibility="@{viewModel.checked ? View.VISIBLE : View.GONE}"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_marginStart="5dp"
-            android:text="@{viewModel.title}"
-            tools:text="트랙이름" />
+            android:layout_marginEnd="5dp"
+            android:background="@color/gray10" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+
 </layout>

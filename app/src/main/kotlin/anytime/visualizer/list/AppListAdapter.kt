@@ -113,8 +113,8 @@ class AppListAdapter : RecyclerView.Adapter<AppListAdapter.ViewHolder>() {
         getList().filterIsInstance<T>()
 
     inline fun <reified T: BaseItemViewModel> getCheckedItems() =
-        getList().filterIsInstance<T>().filter { it.checked.get() }
+        getList().filterIsInstance<T>().filter { it.checked.value == true }
 
     inline fun <reified T: BaseItemViewModel> getCheckedCount() =
-        getItems<T>().filter { it.checked.get() }.count()
+        getItems<T>().filter { it.checked.value == true }.count()
 }

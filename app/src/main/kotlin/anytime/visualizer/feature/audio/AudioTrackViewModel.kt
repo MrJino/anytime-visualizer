@@ -22,8 +22,21 @@ class AudioTrackViewModel @Inject constructor(
     }
 
     var onPlayRequest: ((List<AudioQueueEntity>) -> Unit)? = null
+    var onItemChecked: ((Int) -> Unit)? = null
 
     val adapter = AppListAdapter()
+
+    fun getCheckedItems(): List<AudioQueueEntity> {
+        return adapter.getCheckedItems<TrackItemViewModel>().map {
+            it.model.toAudioQueue()
+        }
+    }
+
+    fun clearCheckedItems() {
+        adapter.getItems<TrackItemViewModel>().forEach {
+            it.checked.postValue(false)
+        }
+    }
 
     private fun loadAudioTracks() {
         viewModelScope.launch {
@@ -38,8 +51,8 @@ class AudioTrackViewModel @Inject constructor(
         adapter.clearData()
         list.forEach { track ->
             adapter.addData(TrackItemViewModel(R.layout.item_audio_track, track).apply {
-                onClick = {
-                    onPlayRequest?.invoke(listOf(it.toAudioQueue()))
+                onChecked = {
+                    onItemChecked?.invoke(adapter.getCheckedCount<TrackItemViewModel>())
                 }
             })
         }

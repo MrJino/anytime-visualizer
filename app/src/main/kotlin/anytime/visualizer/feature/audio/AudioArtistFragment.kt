@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import anytime.visualizer.AudioLibraryActivity
+import anytime.visualizer.appActionBarTitle
 import anytime.visualizer.common.AVDebugLog
 import dagger.hilt.android.AndroidEntryPoint
 import noh.jinil.app.anytime.R
@@ -22,7 +23,7 @@ class AudioArtistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         AVDebugLog.i(logTag, "onCreateView-()")
-        AudioLibraryActivity.actionBarTitle.postValue(getString(R.string.action_bar_artist))
+        appActionBarTitle.postValue(getString(R.string.action_bar_artist))
 
         binding = DataBindingUtil.inflate<FragmentAudioArtistBinding?>(inflater, R.layout.fragment_audio_artist, container, false).apply {
             viewModel = artistViewModel

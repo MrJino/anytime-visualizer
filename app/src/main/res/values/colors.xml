@@ -42,8 +42,11 @@
 
     <color name="theme60">#0f62fe</color>
     <color name="theme80">#002d9c</color>
+    <color name="gray80">#343a3f</color>
     <color name="gray60">#697077</color>
+    <color name="gray30">#c1c7cd</color>
     <color name="gray40">#a2a9b0</color>
+    <color name="gray10">#f2f4f8</color>
     <color name="background">#ffffff</color>
     <color name="iconTint">#697077</color>
 </resources>
