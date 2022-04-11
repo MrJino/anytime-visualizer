@@ -33,11 +33,15 @@ class AudioLibraryActivity : AppCompatActivity(), ServiceConnection {
         val bottomNavView = binding.mediaBottomNav
         val navController = findNavControllerFromFragmentManager(R.id.media_nav_host)
 
+        // Bottom Navigation View 자동 Fragment 이동 처리 등록
         bottomNavView.setupWithNavController(navController)
 
+        // Action Bar 타이틀 세팅
         appActionBarTitle.observe(this) { title ->
             supportActionBar?.title = title
         }
+
+        // Bottom Navigation View 숨김/보기 처리
         appBottomMenu.observe(this) { menu ->
             AVDebugLog.l(logTag, "appBottomMenu: $menu")
             binding.mediaBottomNav.show(menu == AppBottomMenu.NONE)

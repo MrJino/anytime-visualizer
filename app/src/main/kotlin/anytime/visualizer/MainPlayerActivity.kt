@@ -32,13 +32,15 @@ class MainPlayerActivity : AppCompatActivity(), ServiceConnection {
         binding = ActivityMainPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setSupportActionBar(binding.appBarMain.toolbar)
+        setSupportActionBar(binding.toolbar)
 
+        // Action Bar 메뉴 등록
         supportActionBar?.run {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24)
         }
 
+        // Drawer Navigation View 리스너 등록
         binding.drawerNavView.setNavigationItemSelectedListener(onNavigationItemSelectedListener)
     }
 

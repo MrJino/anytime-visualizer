@@ -135,7 +135,7 @@ class AudioPlaybackService : Service() {
             val serviceChannel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_HIGH
+                NotificationManager.IMPORTANCE_LOW
             )
             manager.createNotificationChannel(serviceChannel)
 
